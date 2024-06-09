@@ -38,7 +38,7 @@ jobs:
       - name: Creating K8s Artifacts
         run: |
           mkdir k8s/
-          kubectl create deployment app-exemple-platform-obs --namespace=vkpr --port=8080 --replicas=1 \
+          kubectl create deployment app-exemple-platform-obs --namespace=veecode-apr --port=8080 --replicas=1 \
           --image=docker.io/veecode/app-exemple-platform-obs:latest --dry-run=client -o=yaml > ./k8s/deployment.yaml
           yq e '''
           .metadata.labels."backstage.io/kubernetes-id"= "app-exemple-platform-obs" |
@@ -51,7 +51,7 @@ jobs:
           del(.status) | del(.metadata.creationTimestamp) | del(.spec.template.metadata.creationTimestamp) | del(.spec.strategy)
           ''' -i ./k8s/deployment.yaml
 
-          kubectl create service clusterip app-exemple-platform-obs-service-0 --namespace=vkpr \
+          kubectl create service clusterip app-exemple-platform-obs-service-0 --namespace=veecode-apr \
           --tcp=8080:8080 --dry-run=client -o=yaml > ./k8s/service.yaml
           yq e '''
           .metadata.annotations."sidecar.opentelemetry.io/inject"= "true" |
@@ -60,7 +60,7 @@ jobs:
           .metadata.labels."backstage.io/kubernetes-id"="app-exemple-platform-obs"''' -i ./k8s/service.yaml
           yq e '.spec.selector.app="app-exemple-platform-obs"' -i ./k8s/service.yaml
 
-          kubectl create ingress app-exemple-platform-obs --class=kong --namespace=vkpr \
+          kubectl create ingress app-exemple-platform-obs --class=kong --namespace=veecode-apr \
           --annotation "cert-manager.io/cluster-issuer"="certmanager-issuer" \
           --annotation "konghq.com/https-redirect-status-code"="308" \
           --annotation "kubernetes.io/tls-acme"="true" \

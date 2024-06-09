@@ -31,7 +31,7 @@ public class CustomerController {
   @GetMapping
   public ResponseEntity<String> get() {
     logger.info("Calling k8s service /info");
-    ResponseEntity<String> forEntity = restTemplate.getForEntity("http://app-exemple-platform-k8s-service-0.vkpr:8081/info",
+    ResponseEntity<String> forEntity = restTemplate.getForEntity("http://app-exemple-platform-k8s-service-0.veecode-apr:8081/info",
         String.class);
     logger.info(String.format("Response from k8s service /info: %s", forEntity.getBody()));
     return forEntity;
