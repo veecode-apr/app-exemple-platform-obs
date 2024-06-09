@@ -4,7 +4,6 @@ name: Build Publish Spring Boot
 on:
   push:
     branches: [ main ]
-
 jobs:
   build-project:
     runs-on: ubuntu-latest
