@@ -43,7 +43,7 @@ jobs:
           yq e '''
           .metadata.labels."backstage.io/kubernetes-id"= "app-exemple-platform-obs" |
           .spec.template.metadata.labels."backstage.io/kubernetes-id"= "app-exemple-platform-obs" |
-          .spec.template.spec.containers[0].imagePullPolicy= "IfNotPresent" |
+          .spec.template.spec.containers[0].imagePullPolicy= "Always" |
           .spec.template.spec.containers[0].resources.requests.memory= "256Mi" |
           .spec.template.spec.containers[0].resources.limits.memory= "768Mi" |
           .spec.template.metadata.annotations."sidecar.opentelemetry.io/inject"= "true" |
