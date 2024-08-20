@@ -26,7 +26,7 @@ jobs:
           BOOT_DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} #used by build.gradle      
         run: |
           ./gradlew bootBuildImage \
-          --imageName=docker.io/veecode/app-exemple-platform-obs:latest \
+          --imageName=docker.io/veecode/app-exemple-platform-obs:latest-apr \
           --publishImage
 
       - name: Setting up kubectl client
@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir k8s/
           kubectl create deployment app-exemple-platform-obs --namespace=veecode-apr --port=8080 --replicas=1 \
-          --image=docker.io/veecode/app-exemple-platform-obs:latest --dry-run=client -o=yaml > ./k8s/deployment.yaml
+          --image=docker.io/veecode/app-exemple-platform-obs:latest-apr --dry-run=client -o=yaml > ./k8s/deployment.yaml
           yq e '''
           .metadata.labels."backstage.io/kubernetes-id"= "app-exemple-platform-obs" |
           .spec.template.metadata.labels."backstage.io/kubernetes-id"= "app-exemple-platform-obs" |
